@@ -1,0 +1,9 @@
+#chat-box {
+    background-color: red;
+}
+#chat-box .login {
+    height: 65px;
+}
+#chat-box .input {
+    height: 65px;
+}

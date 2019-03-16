@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/cursor.css">
+    <link rel="stylesheet" href="/css/web-window.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/chat-box.css">
+    <link rel="stylesheet" href="/css/display.css">
+    <link rel="stylesheet" href="/css/inventory.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+<body>
+    <div class="web-window default-cursor">
+        <div id="header">
+            
+        </div>
+        <div id="chat-box">
+            <div class="login">
+                <div class="username"><input type="text" id="chat_input_username" value=""></div>
+                <div class="password"><input type="password" id="chat_input_password" value=""></div>
+                <button onclick="login()">Log in</button>
+            </div>
+            <div class="display">
+                <div class="message">
+                    <div class="user">System:</div>
+                    <div class="text">Detected user {{user.username}}</div>
+                </div>
+            </div>
+            <div class="input"></div>
+        </div>
+        <div id="display">
+        
+        </div>
+        <div id="inventory">
+        
+        </div>
+        <div id="footer">
+            
+        </div>
+    </div>
+    
+    <div class="resource-container" style="display: none">
+        <img>
+    </div>
+    <script lang="javascript" src="/js/sha256.js"></script>
+    <script lang="javascript" src="/js/chat-box.js"></script>
+</body>
+</html>
