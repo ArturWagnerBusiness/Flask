@@ -24,11 +24,26 @@
             </div>
             <div class="display">
                 <div class="message">
-                    <div class="user">System:</div>
-                    <div class="text">Detected user {{user.username}}</div>
+                    <div class="user">
+	                    {% if user.username=="Default"%}
+	                    	Please sign in
+	                    {% else %}
+	                    	System:
+	                    {% endif %}
+                	</div>
+                    <div class="text">
+	                    {% if user.username=="Default"%}
+	                    	
+	                    {% else %}
+	                    	{{user.username}} signed in!
+	                    {% endif %}
+                    </div>
                 </div>
             </div>
-            <div class="input"></div>
+            <div class="input">
+            	<input type="text" id="message_input" value="">
+            	<button onclick="sendMessage()">Send</button>
+            </div>
         </div>
         <div id="display">
         
@@ -46,5 +61,8 @@
     </div>
     <script lang="javascript" src="/js/sha256.js"></script>
     <script lang="javascript" src="/js/chat-box.js"></script>
+    <script>
+    	setInterval(update, 1000)
+    </script>
 </body>
 </html>

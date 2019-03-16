@@ -8,21 +8,33 @@ class Chat:
     def __init__(self):
         self.users = {}
         self.online = True
-
+        self.chatlog = []
         self.database = DataBase("user_credentials")
 
     def loginUser(self, username, userHash):
         if not self.check_user(username, userHash):
             return ""
         else:
-            self.users[secrets] = self.database.getUser(username)
-            return username + srt(secrets.token_hex(20))
+            secret = secrets.token_hex(20)
+            self.users[username + str(secret)] = self.database.getUser(username)
+            print("Creating secret!")
+            return username + str(secret)
+
+    def getLog(self):
+        return self.chatlog
+
+    def addMessage(self, message):
+        self.chatlog.append(message)
 
     def check_user(self, username, userHash):
         return self.database.validateUser(username, userHash)
 
     def exists(self, secret):
-        self.users[secret]
+        try:
+            x=self.users[secret]
+            return True
+        except KeyError:
+            return False
 
-    def get(self, username):
-        return self.database.getUser(username)
+    def get(self, secret):
+        return self.users[secret]

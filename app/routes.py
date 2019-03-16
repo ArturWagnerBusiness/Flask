@@ -9,36 +9,59 @@ chatServer = chat_server.Chat()
 @app.route("/index")
 def index():
     secret = request.cookies.get('secret')
-    if chatServer.exist(secret):
+    if chatServer.exists(secret):
+        print("Already Logged in!")
         user = chatServer.get(secret)
-
     else:
+        print("Not logged in!")
         user = {
             "id": "None",
             "username": "Default"
         }
     return render_template('index.html', title='Home', user=user)
 
-@app.route("/chat", methods=["GET", "POST"])
+@app.route("/chatmessage", methods=["POST"])
 def chatMessage():
     secret = ""
     message = ""
-    if request.method == 'POST':
-        print(request.form)
-        for name, value in request.form.items():
-            if name == "secret":
-                secret = value
-            if name == "message":
-                message = value
-    if chatServer.exist(secret):
-        chatServer.addMessage(message)
+    print("Message send!")
+    for name, value in request.form.items():
+        if name == "secret":
+            secret = value
+        if name == "message":
+            message = value
+            try:
+                message = message.replace("&ENDOFLINE&", "")
+            except Exception as e:
+                pass
+    if chatServer.exists(secret):
+        print("Adding message")
+        user = chatServer.get(secret)["username"]
+        chatServer.addMessage(user + ":" + message)
+    print("Invalid secret!")
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/chatupdate", methods=["POST"])
+def chatUpdate():
+    print("Requested log!")
+    secret = ""
+    for name, value in request.form.items():
+        if name == "secret":
+            secret = value
+    if chatServer.exists(secret):
+        print("Sending requested log")
+        lines = ""
+        for line in chatServer.getLog():
+            lines += line + "&ENDOFLINE&"
+        return lines
+    print("Invalid secret!")
+    return "NOT_LOGGED_IN"
+
+@app.route("/login", methods=['POST'])
 def login():
     username = ""
     userHash = ""
+    print("User request login!")
     if request.method == 'POST':
-        print(request.form)
         for name, value in request.form.items():
             if name == "username":
                 username = value
@@ -46,9 +69,13 @@ def login():
                 userHash = value
 
     resp = make_response()
+    print("Attempting login!")
     secret = chatServer.loginUser(username, userHash)
     if secret != "":
+        print("Logged in!")
         resp.set_cookie('secret', secret)
+    else:
+        print("Wrong credentials give!")
 
     return resp
 

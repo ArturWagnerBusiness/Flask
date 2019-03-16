@@ -2,8 +2,25 @@
     background-color: red;
 }
 #chat-box .login {
-    height: 65px;
+	height: 10%;
+    width: 100%;
+}
+#chat-box .login button{
+    width: 100%;
+}
+#chat-box .login input{
+    width: 100%;
+}
+#chat-box .display {
+	height: 80%;
 }
 #chat-box .input {
-    height: 65px;
+	height: 10%;
+    width: 100%;
+}
+#chat-box .input button{
+	width: 100%;
+}
+#chat-box .input input{
+	width: 100%;
 }

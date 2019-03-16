@@ -28,16 +28,13 @@ class DataBase:
             with self.server.cursor() as cursor:
                 query = "SELECT id, username FROM users WHERE username = %s"
                 cursor.execute(query, (str(username)))
-                respond = cursor.fetchall()
-            print(respond + " =? " + givenHash)
-            if respond == givenHash:
-                # (("id", ), ("username", ), )
-                return {
-                    "id": respond[0][0],
-                    "username": respond[1][0]
-                }
-            else:
-                return {}
+                respond = cursor.fetchone()
+            print(respond)
+            # ("id", "username")
+            return {
+                "id": respond[0],
+                "username": respond[1]
+            }
         except TypeError:
             return {}
     def addUser(self, username, givenHash):
@@ -62,7 +59,7 @@ class DataBase:
         acceptedCharacters = self.alphabet + self.alphabet.upper() + self.numbers
         temp = username
         for character in acceptedCharacters:
-            temp.replace(character, "")
+            temp = temp.replace(character, "")
         return temp == ""
 
     def isHashValid(self, givenHash):
@@ -71,5 +68,5 @@ class DataBase:
         acceptedCharacters = self.alphabet + self.alphabet.upper() + self.numbers
         temp = givenHash
         for character in acceptedCharacters:
-            temp.replace(character, "")
+            temp = temp.replace(character, "")
         return temp == ""
