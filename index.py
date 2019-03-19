@@ -1,3 +1,3 @@
 from app import app
-
-app.run(host="0.0.0.0")
+from os import environ
+app.run(debug=True, host="0.0.0.0", port=5000)
